@@ -20,7 +20,12 @@ module.exports = (io, socket, onlineUsers, channels) => {
         //Send over the onlineUsers
         socket.emit('get online users', onlineUsers);
     })
-    
+    //do this for channels
+    socket.on('update channels', () => {
+        //Send over the channels
+        socket.emit('update channels', channels);
+    })
+
     // This fires when a user closes out of the application
     // socket.on("disconnect") is a special listener that fires when a user exits out of the application.
     socket.on('disconnect', () => {
@@ -31,10 +36,7 @@ module.exports = (io, socket, onlineUsers, channels) => {
     });
     // New Channel
     socket.on('new channel', (newChannel) => {
-        console.log(newChannel);
-    })
-
-    socket.on('new channel', (newChannel) => {
+        console.log(`New channel: ${newChannel} was created!`);
         //Save the new channel to our channels object. The array will hold the messages.
         channels[newChannel] = [];
         //Have the socket join the new channel room.
